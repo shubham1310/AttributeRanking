@@ -104,7 +104,15 @@ class RankNet(NNfuncs.NN):
 
             if (step + 1) % loss_step == 0:
                 train_score = self.model.predict(chainer.Variable(x_train))
+                # print("train score:")
+                # print(train_score)
+                # print("y_train:")
+                # print(y_train)
                 test_score = self.model.predict(chainer.Variable(x_test))
+                # print("test score:")
+                # print(test_score)
+                # print("y_test:")
+                # print(y_test)
                 train_ndcg = self.ndcg(y_train, train_score)
                 test_ndcg = self.ndcg(y_test, test_score)
                 self.train_loss.append(train_ndcg)
@@ -123,6 +131,9 @@ class RankNet(NNfuncs.NN):
 
         plot_result.acc(self.train_loss, self.test_loss, savename=savefigName)
         self.saveModels(savemodelName)
+
+    def RankNetpredict(self, X, batchsize=100):
+        return self.predict(X, batchsize)
 
 
 

@@ -1,5 +1,8 @@
 import RankNet
 import numpy as np
+import warnings
+warnings.filterwarnings("ignore")
+
 feat_file = 'feat.txt'
 # X = np.loadtxt(feat_file)
 f1 = open(feat_file, 'r')
@@ -57,4 +60,9 @@ print (len(y_tr),len(X_tr))
 
 Model = RankNet.RankNet()
 
-Model.fit(X_tr,y_tr,n_iter=5000)
+Model.fit(X_tr,y_tr,n_iter=500)
+
+X_ts = np.array(X_ts)
+
+py = Model.RankNetpredict(X_ts)
+print (py)
