@@ -40,29 +40,36 @@ for p in freq:
     index += p
 
 class_strength = [
-6	,
-8	,
-7	,
-5	,
-2	,
-1	,
-4	,
-3	]
+6.0	,
+8.0	,
+7.0	,
+5.0	,
+2.0	,
+1.0	,
+4.0	,
+3.0	]
 
 y_tr=[]
+y_ts = []
 for i in range(len(l_tr)):
     y_tr.append(class_strength[int(l_tr[i])-1])
+    # print (y_tr[i])
 
-X_tr = np.array(X_tr)
-y_tr = np.array(y_tr)
+for i in range(len(l_ts)):
+    y_ts.append(class_strength[int(l_ts[i])-1])
+    print (y_ts[i])
 
-print (len(y_tr),len(X_tr))
-
-Model = RankNet.RankNet()
-
-Model.fit(X_tr,y_tr,n_iter=500)
-
-X_ts = np.array(X_ts)
-
-py = Model.RankNetpredict(X_ts)
-print (py)
+# X_tr = np.array(X_tr)
+# y_tr = np.array(y_tr)
+#
+# print (len(y_tr),len(X_tr))
+#
+# Model = RankNet.RankNet()
+#
+# Model.fit(X_tr,y_tr,batchsize=10, n_iter=50000, n_units1 = 1024)
+#
+# X_ts = np.array(X_ts)
+#
+# py = Model.RankNetpredict(X_ts,batchsize=10)
+# print (py)
+# print (y_ts)
