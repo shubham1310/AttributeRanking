@@ -3,15 +3,24 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore")
 
-feat_file = 'feat.txt'
-# X = np.loadtxt(feat_file)
-f1 = open(feat_file, 'r')
-a = f1.read().split('\n')
-X = []
+# feat_file = 'feat.txt'
+# # X = np.loadtxt(feat_file)
+# f1 = open(feat_file, 'r')
+# a = f1.read().split('\n')
+# X = []
 
-for i in range(len(a)):
-    feature = a[i].split("\t")
-    X.append(feature[0:512])
+# for i in range(len(a)):
+#     feature = a[i].split("\t")
+#     X.append(feature[0:512])
+import csv
+f=open("features_face_2.csv")
+X = []
+k = 0
+for row in csv.reader(f):
+    X.append([])
+    for i in row:
+        X[k].append(eval(i))
+    k += 1
 
 label_file = 'labels.txt'
 f2 = open(label_file,'r')
@@ -39,37 +48,44 @@ for p in freq:
 
     index += p
 
-class_strength = [
-6.0	,
-8.0	,
-7.0	,
-5.0	,
-2.0	,
-1.0	,
-4.0	,
-3.0	]
+class_strength_main = [[6, 8, 7, 5, 2, 1, 4, 3],
+ [1, 2, 3, 5, 7, 6, 8, 4],
+ [5, 3, 2, 4, 8, 6, 1, 7],
+ [8, 4, 3, 2, 6, 7, 1, 5],
+ [5, 6, 7, 1, 3, 4, 8, 2],
+ [6, 7, 5, 8, 1, 2, 4, 3],
+ [4, 6, 5, 2, 1, 3, 7, 8],
+ [1, 2, 8, 7, 4, 6, 5, 3],
+ [7, 5, 1, 2, 6, 8, 3, 4],
+ [6, 4, 1, 3, 8, 7, 2, 5]]
 
-y_tr=[]
-y_ts = []
-for i in range(len(l_tr)):
-    y_tr.append(class_strength[int(l_tr[i])-1])
-    # print (y_tr[i])
+rankarray = [[] for i in range(len(X_tr)+len(X_ts) ) ]
 
-for i in range(len(l_ts)):
-    y_ts.append(class_strength[int(l_ts[i])-1])
-    print (y_ts[i])
+for i in range(len(class_strength_main)):
+    class_strength=class_strength_main[i]
+    y_tr=[]
+    y_ts = []
+    for i in range(len(l_tr)):
+        y_tr.append(class_strength[int(l_tr[i])-1])
+        # print (y_tr[i])
 
-# X_tr = np.array(X_tr)
-# y_tr = np.array(y_tr)
-#
-# print (len(y_tr),len(X_tr))
-#
-# Model = RankNet.RankNet()
-#
-# Model.fit(X_tr,y_tr,batchsize=10, n_iter=50000, n_units1 = 1024)
-#
-# X_ts = np.array(X_ts)
-#
-# py = Model.RankNetpredict(X_ts,batchsize=10)
-# print (py)
-# print (y_ts)
+    for i in range(len(l_ts)):
+        y_ts.append(class_strength[int(l_ts[i])-1])
+        print (y_ts[i])
+
+    X_tr = np.array(X_tr)
+    y_tr = np.array(y_tr)
+
+    print (len(y_tr),len(X_tr))
+
+    Model = RankNet.RankNet()
+
+    Model.fit(X_tr,y_tr,batchsize=10, n_iter=50000, n_units1 = 1024)
+
+    X_ts = np.array(X_ts)
+
+    py = Model.RankNetpredict(np.concatenate((X_tr,X_ts), axis=0),batchsize=10)
+    for i in range(len(py)):
+        rankarray[i].append(py[i])
+        # print (py[i],y_ts[i])
+    print rankarray

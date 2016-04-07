@@ -111,6 +111,7 @@ if __name__ == "__main__":
     sourceDir = '.git/test/'
     im_filelist = glob.glob(sourceDir+'*')
     count = 1
+    im_filelist
     for fil in im_filelist:
         print ('Image number:', count)
         count += 1
