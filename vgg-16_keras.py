@@ -99,21 +99,25 @@ if __name__ == "__main__":
 
     model2.add(Flatten())
     model2.add(Dense(4096, activation='relu', weights=model.layers[32].get_weights()))
-    model2.add(Dropout(0.5))
-    model2.add(Dense(4096, activation='relu', weights=model.layers[34].get_weights()))
-
+    # model2.add(Dropout(0.5))
+    # model2.add(Dense(4096, activation='relu', weights=model.layers[34].get_weights()))
+    #
     model2.compile(optimizer=sgd, loss='categorical_crossentropy')
 
     # out = model2.predict(im)
     # for i in out[0]:
     #     print (i)
     features = []
-    sourceDir = '.git/test/'
+    sourceDir = '.git/face/'
+    print ('Reading Images...')
     im_filelist = glob.glob(sourceDir+'*')
+    print ('Sorting Images...')
+    im_filelist.sort()
+    print ('Sorting done.')
     count = 1
     im_filelist
     for fil in im_filelist:
-        print ('Image number:', count)
+        print ('Image number:', count, ', Name:', fil)
         count += 1
         im = cv2.resize(cv2.imread(fil), (224, 224)).astype(np.float32)
         im[:,:,0] -= 103.939
@@ -122,9 +126,11 @@ if __name__ == "__main__":
         im = im.transpose((2,0,1))
         im = np.expand_dims(im, axis=0)
         out = model2.predict(im)
+        # print (len(out[0]))
+        # print (out[0])
         features.append(out[0])
     print ('Writing features in csv file')
-    imlfile = open('.git/features.csv', 'w')
+    imlfile = open('.git/features_face_2.csv', 'w')
     wr = csv.writer(imlfile, quoting=csv.QUOTE_ALL)
 
     for i in range(len(features)):
@@ -132,4 +138,4 @@ if __name__ == "__main__":
         for x in features[i]:
             temp.append(x)
         wr.writerow(temp)
-    # print (np.argmax(out))
+    print (np.argmax(out))
