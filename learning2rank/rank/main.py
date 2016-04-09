@@ -17,19 +17,23 @@ f=open("features_face_2.csv")
 X = []
 k = 0
 for row in csv.reader(f):
+    # if k>=100:
+    #     break
     X.append([])
     for i in row:
         X[k].append(eval(i))
-    k += 1
+    # k += 1
 
 label_file = 'labels.txt'
 f2 = open(label_file,'r')
 l = f2.read().split('\n')
-
+# l = l[0:100]
+print (len(X),len(l))
 freq = []
-for i in range(1,9):
+for i in range(1,3):
     freq.append(l.count(str(i)))
-# print (freq)
+
+print (freq)
 X_tr = []
 l_tr = []
 X_ts = []
@@ -65,27 +69,28 @@ for i in range(len(class_strength_main)):
     class_strength=class_strength_main[i]
     y_tr=[]
     y_ts = []
-    for i in range(len(l_tr)):
-        y_tr.append(class_strength[int(l_tr[i])-1])
-        # print (y_tr[i])
+    for j in range(len(l_tr)):
+        y_tr.append(class_strength[int(l_tr[j])-1])
+        # print (y_tr[j])
 
-    for i in range(len(l_ts)):
-        y_ts.append(class_strength[int(l_ts[i])-1])
-        print (y_ts[i])
+    for j in range(len(l_ts)):
+        y_ts.append(class_strength[int(l_ts[j])-1])
+        # print (y_ts[j])
 
     X_tr = np.array(X_tr)
     y_tr = np.array(y_tr)
-
+    X_ts = np.array(X_ts)
+    y_ts = np.array(y_ts)
     print (len(y_tr),len(X_tr))
-
+    y = np.concatenate((y_tr,y_ts), axis=0)
     Model = RankNet.RankNet()
 
-    Model.fit(X_tr,y_tr,batchsize=10, n_iter=50, n_units1 = 1024)
-
-    X_ts = np.array(X_ts)
+    Model.fit(np.concatenate((X_tr,X_ts), axis=0),np.concatenate((y_tr,y_ts), axis=0),batchsize=10, n_iter=50, n_units1 = 1024)
 
     py = Model.RankNetpredict(np.concatenate((X_tr,X_ts), axis=0),batchsize=10)
-    for i in range(len(py)):
-        rankarray[i].append(py[i])
-        # print (py[i],y_ts[i])
-print rankarray
+    for j in range(len(py)):
+        rankarray[j].append(py[j])
+        # print (py[j],y[j])
+    # print ('hello')
+    Model.saveModels('Model_att'+str(i)+'.model')
+print (rankarray)
