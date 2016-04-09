@@ -70,6 +70,9 @@ class RankNet(NNfuncs.NN):
         self.resumemodelName = resumemodelName
         self.train_loss, self.test_loss = [], []
         if resumemodelName is not None:
+            self.model = Model(4096, 1024, 128, 1)
+            self.optimizer = optimizers.Adam()
+            self.optimizer.setup(self.model)
             print("load resume model!")
             self.loadModel(resumemodelName)
 

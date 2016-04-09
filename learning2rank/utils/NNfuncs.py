@@ -44,9 +44,9 @@ class NN(object):
 
     def saveModels(self, savemodelName):
         print('save the model')
-        serializers.save_hdf5(savemodelName, self.model) 
+        serializers.save_hdf5(savemodelName, self.model)
         print('save the optimizer')
-        serializers.save_hdf5(savemodelName[:-5]+ 'state', self.optimizer)  
+        serializers.save_hdf5(savemodelName[:-5]+ 'state', self.optimizer)
 
     def splitData(self, fit_X, fit_y, tv_ratio):
         print('load dataset')
@@ -66,5 +66,3 @@ class NN(object):
 
     def predict(self, predict_X, batchsize=100):
         return self.predictTargets(predict_X.astype(np.float32), batchsize)
-
-
