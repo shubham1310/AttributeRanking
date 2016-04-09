@@ -80,7 +80,7 @@ for i in range(len(class_strength_main)):
 
     Model = RankNet.RankNet()
 
-    Model.fit(X_tr,y_tr,batchsize=10, n_iter=50, n_units1 = 1024)
+    Model.fit(X_tr,y_tr,batchsize=10, n_iter=10000, n_units1 = 1024)
 
     X_ts = np.array(X_ts)
 
