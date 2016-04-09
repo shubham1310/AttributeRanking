@@ -115,6 +115,7 @@ if __name__ == "__main__":
     im_filelist.sort()
     print ('Sorting done.')
     count = 1
+    im_filelist
     for fil in im_filelist:
         print ('Image number:', count, ', Name:', fil)
         count += 1
