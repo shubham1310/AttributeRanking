@@ -87,6 +87,7 @@ for i in range(len(class_strength_main)):
 
     Model.fit(np.concatenate((X_tr,X_ts), axis=0),np.concatenate((y_tr,y_ts), axis=0),batchsize=10, n_iter=50, n_units1 = 1024)
 
+
     py = Model.RankNetpredict(np.concatenate((X_tr,X_ts), axis=0),batchsize=10)
     for j in range(len(py)):
         rankarray[j].append(py[j])
