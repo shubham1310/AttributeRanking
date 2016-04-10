@@ -2,6 +2,7 @@
 import numpy as np
 from sklearn import mixture
 from scipy.stats import multivariate_normal
+from sklearn import metrics
 f = open('rank.txt', 'r')
 a=f.read()
 a=eval(a)
@@ -40,6 +41,7 @@ for i in range(len(unseen)):
 # for i in range(len(mean)):
 # 	print (mean[i])
 # 	print (covar[i])
+predclass=[]
 for i in range(len(labels[train_len:])):
 	p=0
 	clas=1
@@ -50,6 +52,8 @@ for i in range(len(labels[train_len:])):
 			# print ('hi')
 			p=temp
 			clas=j+1
+	predclass.append(clas)
 	print (clas,labels[train_len+i])
 	# print('\n\n')
 	# calculate accuracy
+print(metrics.classification_report(predclass,labels[train_len:]))
