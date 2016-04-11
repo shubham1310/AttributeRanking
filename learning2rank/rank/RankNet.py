@@ -70,7 +70,7 @@ class RankNet(NNfuncs.NN):
         self.resumemodelName = resumemodelName
         self.train_loss, self.test_loss = [], []
         if resumemodelName is not None:
-            self.model = Model(4096, 1024, 128, 1)
+            self.model = Model(4096, 2048, 128, 1)
             self.optimizer = optimizers.Adam()
             self.optimizer.setup(self.model)
             print("load resume model!")
@@ -107,10 +107,6 @@ class RankNet(NNfuncs.NN):
 
             if (step + 1) % loss_step == 0:
                 train_score = self.model.predict(chainer.Variable(x_train))
-                # print("train score:")
-                # print(train_score)
-                # print("y_train:")
-                # print(y_train)
                 test_score = self.model.predict(chainer.Variable(x_test))
                 # print("test score:")
                 # print(test_score)

@@ -13,10 +13,14 @@ for row in csv.reader(f):
     k += 1
 
 rankarray = [[] for i in range(len(X))]
+n_att = 10
 
-Model = RankNet.RankNet('RankNet.model')
-X = np.asarray(X)
-py = Model.RankNetpredict(X, batchsize=10)
-for i in range(len(py)):
-    rankarray[i].append(py[i])
+for i in range(n_att):
+    print (i)
+    model = 'Model_att'+str(i)+'.model'
+    Model = RankNet.RankNet(model)
+    X = np.asarray(X)
+    py = Model.RankNetpredict(X, batchsize=10)
+    for j in range(len(py)):
+        rankarray[j].append(py[j])
 print (rankarray)
