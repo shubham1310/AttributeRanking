@@ -108,7 +108,7 @@ if __name__ == "__main__":
     # for i in out[0]:
     #     print (i)
     features = []
-    sourceDir = '.git/AbhishekBachchan/'
+    sourceDir = '.git/Shakira/'
     print ('Reading Images...')
     im_filelist = glob.glob(sourceDir+'*')
     print ('Sorting Images...')
@@ -130,7 +130,7 @@ if __name__ == "__main__":
         # print (out[0])
         features.append(out[0])
     print ('Writing features in csv file')
-    imlfile = open('.git/features_face_AB.csv', 'w')
+    imlfile = open('.git/features_face_Shakira.csv', 'w')
     wr = csv.writer(imlfile, quoting=csv.QUOTE_ALL)
 
     for i in range(len(features)):
