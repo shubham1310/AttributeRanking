@@ -22,7 +22,7 @@ for row in csv.reader(f):
     X.append([])
     for i in row:
         X[k].append(eval(i))
-    # k += 1
+    k += 1
 
 label_file = 'labels.txt'
 f2 = open(label_file,'r')
@@ -30,7 +30,7 @@ l = f2.read().split('\n')
 # l = l[0:100]
 print (len(X),len(l))
 freq = []
-for i in range(1,3):
+for i in range(1,9):
     freq.append(l.count(str(i)))
 
 print (freq)
@@ -81,11 +81,11 @@ for i in range(len(class_strength_main)):
     y_tr = np.array(y_tr)
     X_ts = np.array(X_ts)
     y_ts = np.array(y_ts)
-    print (len(y_tr),len(X_tr))
-    y = np.concatenate((y_tr,y_ts), axis=0)
+    # print (len(y_tr),len(X_tr))
+    # y = np.concatenate((y_tr,y_ts), axis=0)
     Model = RankNet.RankNet()
 
-    Model.fit(np.concatenate((X_tr,X_ts), axis=0),np.concatenate((y_tr,y_ts), axis=0),batchsize=10, n_iter=50, n_units1 = 1024)
+    Model.fit(np.concatenate((X_tr,X_ts), axis=0),np.concatenate((y_tr,y_ts), axis=0),batchsize=10, n_iter=10000, n_units1 = 2048)
 
 
     py = Model.RankNetpredict(np.concatenate((X_tr,X_ts), axis=0),batchsize=10)

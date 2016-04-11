@@ -3,7 +3,7 @@ import numpy as np
 from sklearn import mixture
 from scipy.stats import multivariate_normal
 from sklearn import metrics
-f = open('rank.txt', 'r')
+f = open('rankingn.txt', 'r')
 a=f.read()
 a=eval(a)
 trueRank = np.asarray(a)

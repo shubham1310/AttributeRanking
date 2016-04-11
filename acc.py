@@ -11,7 +11,7 @@ f = open('nlabel.txt', 'r')
 labels = [line.strip() for line in f]
 f.close()
 
-f = open('rank.txt', 'r')
+f = open('learning2rank/rank/rankingn.txt', 'r')
 Rank = f.read()
 Rank = eval(Rank)
 Rank = np.asarray(Rank)
