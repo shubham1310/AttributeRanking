@@ -1,17 +1,32 @@
 # import csv
 import numpy as np
 from sklearn import mixture
+import scipy
 from scipy.stats import multivariate_normal
 from sklearn import metrics
-f = open('rankingn.txt', 'r')
-a=f.read()
-a=eval(a)
+f = open('rank.txt', 'r')
+b=f.read()
+a=eval(b)
+# b=b.split('\n')
+# a=[]
+# for x in b:
+# 	a.append(eval(x))
+# print (a)
+# b=[]
+# for x in a:
+# 	y=x
+# 	del x[2]
+# 	del x[6]
+# 	b.app
 trueRank = np.asarray(a)
+trueRank= scipy.delete(trueRank, 2, 1)
+trueRank= scipy.delete(trueRank, 6, 1)
+print (len(trueRank))
 f = open('../../nlabel.txt', 'r')
 labels = [eval(line.strip()) for line in f]
 
-n_att = len(a[0])
-n_class= max(labels)
+n_att = len(trueRank[0])
+n_class= 8
 n = len(labels)
 ### Rank to be loaded from rank.txt
 Rank = np.zeros((n,n_att))
@@ -24,36 +39,50 @@ for i in range(train_len):
 gaudist=[]
 mean=[]
 covar=[]
-unseen = [[3,8], [4,7]]
+# unseen = [[[4,2],[1,8],[4,6],[8,1],[1,8],[1,4], [6,7], [4,3],[2,1],[3,2]]
+# ,[[4,7], [1,2], [3,7], [4,8], [2,7], [3,8], [1,7], [5,6], [2,1], [4,8]]
+# ,[[6,8], [3,4], [4,6], [8,6], [4,5], [5,7],[4,1], [4,3], [7,2],[2,1]]];
+unseen = [[[4,2],[1,8],[8,1],[1,8],[1,4], [6,7],[2,1],[3,2]]
+,[[4,7], [1,2], [4,8], [2,7], [3,8], [1,7], [2,1], [4,8]]
+,[[6,8], [3,4], [8,6], [4,5], [5,7],[4,1],  [7,2],[2,1]]];
+
 for i in range(n_class):
 	g=mixture.GMM(n_components=1,covariance_type='full')
 	g.fit(data[i])
 	mean.append(g.means_[0])
 	covar.append(g.covars_[0])
-	# print (covar)
 	gaudist.append(g)
-# while 1:
-# 	a=0
+
 for i in range(len(unseen)):
-	mean.append((mean[unseen[i][0]-1] + mean[unseen[i][1]-1])/2)
-	covar.append((covar[unseen[i][0]-1] + covar[unseen[i-1][1]-1])/2)
-	# [sum(x)/2 for x in zip(mean[unseen[i][0]], mean[unseen[i][1]])]
-# for i in range(len(mean)):
-# 	print (mean[i])
-# 	print (covar[i])
+	me=[]
+	s=[0 for i in range(n_class)]
+	support=0
+	for j in range(len(unseen[i])):
+		me.append(np.array((mean[unseen[i][j][0]-1][j] + mean[unseen[i][j][1]-1][j])/2))
+		s[unseen[i][j][0]-1]=1
+		s[unseen[i][j][1]-1]=1
+	fl=0
+	for i in range(n_class):
+		if fl:
+			support+=1
+			co+=s[i]*covar[i]
+		elif s[i]:
+			support+=1
+			co=covar[i]
+			fl=1
+	mean.append(me)
+	covar.append(np.array(co)/support)
 predclass=[]
 for i in range(len(labels[train_len:])):
 	p=0
 	clas=1
 	for j in range(len(mean)):
+		# print (j)
 		temp=multivariate_normal(mean[j],covar[j]).pdf(trueRank[train_len+i])
 		# print(temp)
 		if(temp> p):
-			# print ('hi')
 			p=temp
 			clas=j+1
 	predclass.append(clas)
-	print (clas,labels[train_len+i])
-	# print('\n\n')
-	# calculate accuracy
+	print (labels[train_len+i],clas)
 print(metrics.classification_report(predclass,labels[train_len:]))
