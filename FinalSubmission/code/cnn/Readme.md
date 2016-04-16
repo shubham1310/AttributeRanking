@@ -1,6 +1,6 @@
 The code is taken from: https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3
 
-You can change the sourcedir to get the features at the required place. It takes arounf 1 second for one image.
+You can change the sourcedir to get the features at the required place. It takes around 1 second for one image.
 
 This is the Keras model of the 16-layer network used by the VGG team in the ILSVRC-2014 competition.
 It has been obtained by directly converting the Caffe model provived by the authors.
