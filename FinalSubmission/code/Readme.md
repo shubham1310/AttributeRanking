@@ -16,3 +16,6 @@ Simonyan, Karen, and Andrew Zisserman. "Very deep convolutional networks for lar
 
 The feature extraction code can be found in the cnn folder. It is implemented in keras. The details are in the readme in that folder.
 
+
+For ranking we have two models:
+One is described in the RankSVM folder and other in RankNet folder
