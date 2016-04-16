@@ -2,6 +2,11 @@ The code is taken from: https://gist.github.com/baraldilorenzo/07d7802847aaad0a3
 
 You can change the sourcedir to get the features at the required place. It takes around 1 second for one image.
 
+Requirements:
+
+Theano - Latest (our version - 0.8.0)
+Keras - Latest (our version - 0.3.3)
+
 This is the Keras model of the 16-layer network used by the VGG team in the ILSVRC-2014 competition.
 It has been obtained by directly converting the Caffe model provived by the authors.
 Details about the network architecture can be found in the following arXiv paper:
