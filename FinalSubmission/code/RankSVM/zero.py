@@ -1,22 +1,21 @@
-# import csv
+#This code is for zero shot learning
+import csv
 import numpy as np
 from sklearn import mixture
 import scipy
 from scipy.stats import multivariate_normal
 from sklearn import metrics
 from copy import deepcopy
-f = open('rankcombinedunseen.txt', 'r')
+f = open('rankcombinedunseen.txt', 'r')  #this should contain the RankSpace vector for each training and testing image
 b=f.read()
 a=eval(b)
 trueRank = np.asarray(a)
-# trueRank= scipy.delete(trueRank, 2, 1)
-# trueRank= scipy.delete(trueRank, 6, 1)
 print (len(trueRank))
-f = open('nlabel.txt', 'r')
+f = open('nlabel.txt', 'r') #labels for the images
 labels = [eval(line.strip()) for line in f]
 
 n_att = len(trueRank[0])
-n_class= 8
+n_class= 8 #number of seen classes
 n = len(labels)
 ### Rank to be loaded from rank.txt
 Rank = np.zeros((n,n_att))
@@ -29,22 +28,10 @@ for i in range(n_class):
 gaudist=[]
 mean=[]
 covar=[]
-# unseen = [[[4,2],[1,8],[4,6],[8,1],[1,8],[1,4], [6,7], [4,3],[2,1],[3,2]]
-# ,[[4,7], [1,2], [3,7], [4,8], [2,7], [3,8], [1,7], [5,6], [2,1], [4,8]]
-# ,[[6,8], [3,4], [4,6], [8,6], [4,5], [5,7],[4,1], [4,3], [7,2],[2,1]]];
-# unseen = [[[4,1],[1,2],[8,5],[1,2],[1,2], [6,1],[2,8],[3,4]]  oldest
-# ,[[4,1], [1,2], [4,3], [2,3], [3,1], [1,3], [2,8], [4,7]]
-# # ,[[6,5], [3,8], [8,5], [4,8], [5,6],[4,6],  [7,6],[2,5]]];
 
 unseen=[[[2,3],[1,3],[3,7],[5,7],[2,3],[4,8],[4,3],[2,1],[1,6],[8,5]] # new
 ,[[2,3],[1,3],[7,1],[1,3],[2,3],[4,8],[2,8],[5,2],[5,1],[8,5]]
 ,[[5,6],[7,6],[8,4],[6,8],[4,5],[6,7],[4,3],[7,3],[1,6],[2,6]]];
-
-
-# unseen = [[[2,3],[1,3],[5,7],[2,3],[4,8],[4,3],[1,6],[8,5]] # removing the third and the eigth
-# ,[[2,3],[1,3],[1,3],[2,3],[4,8],[2,8],[5,1],[8,5]]
-# ,[[5,6],[7,6],[6,8],[4,5],[6,7],[4,3],[1,6],[2,6]]];
-# unseen=[]
 
 for i in range(n_class):
 	g=mixture.GMM(n_components=1,covariance_type='full')
