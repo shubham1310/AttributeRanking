@@ -1,0 +1,10 @@
+1 Male
+3 White
+7 Youth
+20 Chubby
+32 Fully_Visible_Forehead
+35 Bushy_Eyebrows
+37 Narrow_Eyes
+40 Pointy_Nose
+41 Big_Lips
+53 Round_Face
