@@ -57,7 +57,7 @@ def VGG_16(weights_path=None):
 if __name__ == "__main__":
 
     # Test pretrained model
-    model = VGG_16('.git/vgg16_weights.h5')
+    model = VGG_16('vgg16_weights.h5')
     sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss='categorical_crossentropy')
     model2 = Sequential()
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     # for i in out[0]:
     #     print (i)
     features = []
-    sourceDir = '.git/Shakira/'
+    sourceDir = 'Shakira/'
     print ('Reading Images...')
     im_filelist = glob.glob(sourceDir+'*')
     print ('Sorting Images...')
@@ -130,7 +130,7 @@ if __name__ == "__main__":
         # print (out[0])
         features.append(out[0])
     print ('Writing features in csv file')
-    imlfile = open('.git/features_face_Shakira.csv', 'w')
+    imlfile = open('features.csv', 'w')
     wr = csv.writer(imlfile, quoting=csv.QUOTE_ALL)
 
     for i in range(len(features)):

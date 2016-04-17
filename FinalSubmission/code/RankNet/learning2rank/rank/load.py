@@ -3,7 +3,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore")
 import csv
-f=open("features_face_Shakira.csv")
+f=open("features_2.csv")
 X = []
 k = 0
 for row in csv.reader(f):

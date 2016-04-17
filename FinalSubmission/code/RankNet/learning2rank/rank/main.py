@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 #     feature = a[i].split("\t")
 #     X.append(feature[0:512])
 import csv
-f=open("features_face_2.csv")
+f=open("features.csv")
 X = []
 k = 0
 for row in csv.reader(f):
